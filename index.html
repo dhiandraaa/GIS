@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>SITEPU</title>
+        <style>
+            #map {
+                background-color: gray;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+    </body>
+    <script>
+        function initMap(){
+			
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 11,
+			center: {lat: -5.400549,lng: 105.266272}});
+		  var infoWin = new google.maps.InfoWindow();
+            // console.log(map);
+            //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+            var markers = locations.map(function(location, i) {
+                var marker = new google.maps.Marker({
+                    position: location,
+					icon : 'images/pin.png',
+                    //label: labels[i % labels.length]
+					});
+					google.maps.event.addListener(marker, 'click', function(evt) {
+						infoWin.setContent(location.info);
+						infoWin.open(map, marker);
+					})
+				return marker;
+                }); 
+            console.log(locations);
+            console.log(markers);
+            var markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: 'images/m'});
+        
+            var d = markerCluster.distanceBetweenPoints_(markers[2].getPosition(),markers[4].getPosition());
+            console.log(markerCluster.getCalculator());
+            // var marker=new google.maps.Marker({position:center,map:map});
+            // console.log(marker);
+        }
+
+        var locations = [
+			{lat: -5.397317, lng: 105.262002, info: "Makam Pahlawan"},
+			{lat: -5.363868, lng: 105.248657, info: "Kampung Baru"},
+			{lat: -5.372858, lng: 105.239979, info: "KB. Anak Agung Siwo Mego"},
+			{lat: -5.378445, lng: 105.240977, info: "Muslim Kamboja"},
+			{lat: -5.377909, lng: 105.244274, info: "Jl. Sultan Jamil"},
+			{lat: -5.427119, lng: 105.268171, info: "KB Payakun"},
+			{lat: -5.413963, lng: 105.261228, info: "Unknown"},
+			{lat: -5.415326, lng: 105.272232, info: "Unknown"},
+        //{lat: -36.828611, lng: 175.790222},
+        //{lat: -37.750000, lng: 145.116667},
+        //{lat: -37.759859, lng: 145.128708},
+        //{lat: -37.765015, lng: 145.133858},
+        //{lat: -37.770104, lng: 145.143299},
+        //{lat: -37.773700, lng: 145.145187},
+        //{lat: -37.774785, lng: 145.137978},
+        //{lat: -37.819616, lng: 144.968119},
+        //{lat: -38.330766, lng: 144.695692},
+        //{lat: -39.927193, lng: 175.053218},
+        //{lat: -41.330162, lng: 174.865694},
+        //{lat: -42.734358, lng: 147.439506},
+        //{lat: -42.734358, lng: 147.501315},
+        //{lat: -42.735258, lng: 147.438000},
+        //{lat: -43.999792, lng: 170.463352}
+      ]
+    </script>
+    <script async defer 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-sUDZMQD_olzo6zGut_rzlH2aSZ8m04Y&callback=initMap"></script>
+    <script src="src/markerclusterer.js">
+    </script>
+</html>
