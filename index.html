@@ -9,9 +9,10 @@
             }
         </style>
     </head>
-    <body>
+    <body><center><h3>Jika Cluster tidak tampil, silahkan buka <a href="images/pin.png">Link Ini</a></h3></center>
+   
         <div id="map"></div>
-    </body>
+ </body>
     <script>
         function initMap(){
 			
@@ -19,14 +20,12 @@
 			zoom: 11,
 			center: {lat: -5.400549,lng: 105.266272}});
 		  var infoWin = new google.maps.InfoWindow();
-            // console.log(map);
-            //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            console.log(map);
         
             var markers = locations.map(function(location, i) {
                 var marker = new google.maps.Marker({
                     position: location,
-					icon : 'images/pin.png',
-                    //label: labels[i % labels.length]
+		icon : 'images/pin.png',
 					});
 					google.maps.event.addListener(marker, 'click', function(evt) {
 						infoWin.setContent(location.info);
@@ -41,9 +40,7 @@
         
             var d = markerCluster.distanceBetweenPoints_(markers[2].getPosition(),markers[4].getPosition());
             console.log(markerCluster.getCalculator());
-            // var marker=new google.maps.Marker({position:center,map:map});
-            // console.log(marker);
-        }
+            }
 
         var locations = [
 			{lat: -5.397317, lng: 105.262002, info: "Makam Pahlawan"},
