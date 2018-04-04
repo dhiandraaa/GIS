@@ -1,12 +1,9 @@
 @charset "utf-8";
-body{
-	background-color: white;
-}
 #header{
 	height: 50px;
 	width: 100%;
-	background-color:#F3F26F;
-	border-radius: 10px;
+	background-color:aquamarine;
+	border-radius: 4px;
 }
 h2{
 	padding-top: 5px;
@@ -14,15 +11,10 @@ h2{
 	padding-left: 10px;
 	color: #FFFFFF;
 }
-#isi{
-	padding-top: 50px;
-	border-color:#000000;
-}
 #info{
-	padding-top: 10px;
-	padding-left: 10px;
-	height: 300px;
-	width: 53%;
+	padding-top: 70px;
+	height: 160px;
+	width: 100%;
 	float: right;
 	background-color: gainsboro;
 	border-radius: 10px;
@@ -34,5 +26,11 @@ input{
 }
 textarea{
 	width: 600px;
-	height: 200px;
+	height: 30px;
+	border-radius: 3px;
+}
+#wrap{
+	background-color:gainsboro;
+	width: 70%;
+	height: 550;
 }
