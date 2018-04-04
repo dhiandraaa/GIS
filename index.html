@@ -25,7 +25,8 @@
             var markers = locations.map(function(location, i) {
                 var marker = new google.maps.Marker({
                     position: location,
-		icon : 'images/pin.png',
+		icon : 'images/pocong.png',
+		animation: google.maps.Animation.BOUNCE
 					});
 					google.maps.event.addListener(marker, 'click', function(evt) {
 						infoWin.setContent(location.info);
