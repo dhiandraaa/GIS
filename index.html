@@ -32,6 +32,13 @@
 						infoWin.setContent(location.info);
 						infoWin.open(map, marker);
 					})
+
+                                        map.addListener('click',function(evt){
+		                               marker.setPosition(event.latLng);
+		                               document.getElementById("lat").value=marker.position.toString();
+		
+                                               console.log(marker.position.toString());
+                                               });
 				return marker;
                 }); 
             console.log(locations);
