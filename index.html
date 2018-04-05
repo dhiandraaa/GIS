@@ -52,7 +52,7 @@
                 var marker = new google.maps.Marker({
                     position: location,
 		icon : 'images/pin.png',
-		animation: google.maps.Animation.BOUNCE
+		animation: google.maps.Animation.DROP
 					});
 					google.maps.event.addListener(marker, 'click', function(evt) {
 						infoWin.setContent(location.info);
