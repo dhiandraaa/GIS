@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SITEPU</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/slim.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">SITEPU</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="About.html">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Des.html">Desclaimer</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Pol.html">Policy</a>
+             </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid atas">
+          <div class="cointainer">
+              <div class="row">
+                  <div class="col-lg">
+                    <center>
+                      <h1>Makam Sultan Jamil</h1>
+                    </center>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    <style>
+        #map{
+            height: 500px;
+            width: 100%;
+            background: rgb(202, 199, 199);
+        }
+        #save{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script>
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCIy3cdRZqQ1vPMjrQWLTbrXvCTzC-mhkE",
+    authDomain: "praktikum-2016.firebaseapp.com",
+    databaseURL: "https://praktikum-2016.firebaseio.com",
+    projectId: "praktikum-2016",
+    storageBucket: "",
+    messagingSenderId: "893314193350"
+  };
+  firebase.initializeApp(config);
+
+var db              = firebase.database();
+var dataRef         = db.ref('Sultan Jamil');
+var newPolygon      = null;
+var arrayPolygon    = [];
+var map             = null;
+var coords          = [];
+var markers         = [];
+var center          = {lat:-5.377897, lng:105.244153};
+
+dataRef.on('value', updateInfo, showErr);
+
+function initMap(){
+    map=new google.maps.Map(document.getElementById('map'),{
+        zoom:18,
+        center:center
+    });
+}
+dataRef.on('value', updateInfo, showErr);
+function updateInfo(data){
+    console.log("berhasil");
+}
+function showErr(err){
+    console.log(err);
+}
+function createPolygon(coord){
+    var tempPoly = new google.maps.Polygon({
+    Path : coord,
+    strokeColor :'red',
+    strokeOpocity : 0.8,
+    strokeWeight : 1,
+    fillColor : 'red',
+    fillOpocity : 0.35
+});
+tempPoly.setMap(map);
+return tempPoly;
+}
+
+function showErr(err){
+    console.log(err);
+}
+function updateInfo(data){
+    data.forEach(function(datamarker){
+        arrayPolygon.push(createPolygon(datamarker.val().geometry.points));
+    });
+}
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4noGQHoz7ZoG7DYMbxaYbofksVSAXJJI&callback=initMap">
+</script>
+</body>
+
+</html>
