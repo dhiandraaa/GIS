@@ -13,7 +13,7 @@ h2{
 }
 #info{
 	padding-top: 70px;
-	height: 160px;
+	height: 120px;
 	width: 100%;
 	float: right;
 	background-color: gainsboro;
@@ -25,7 +25,7 @@ input{
 	border-radius: 5px;
 }
 textarea{
-	width: 600px;
+	width: 615px;
 	height: 30px;
 	border-radius: 3px;
 }

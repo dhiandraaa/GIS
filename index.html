@@ -14,14 +14,13 @@
   	<div id=header>
 		<h2>SITEPU</h2>
 	</div>
-    	<div id="map">
-		</div><br>
+    	<div id="map"></div><br>
 		<div id=info>
     		<input type="text" name="lng" placeholder="Longitude"> &nbsp;
     		<input type="text" name="lat" placeholder="Latitude"><br><br>
-			<textarea name="tempat"></textarea><br><br>
-			<button type="submit">SAVE</button>
+			<textarea name="tempat"></textarea>
     	</div>
+		<button type="button" id="save">Save</button>
     </div>
 	</center>
 </body>
@@ -38,13 +37,31 @@
 		messagingSenderId: "358420723994"
 	};
 	firebase.initializeApp(config);
-</script>
-    <script>
+
+	var db              = firebase.database();
+	var dataRef         = db.ref('Sitepu');
+	var newPolygon      = null;
+	var arrayPolygon    = [];
+	var map             = null;
+	var coords          = [];
+	var markers         = [];
+	var center          = {lat: -5.400549,lng: 105.266272};
+
+	dataRef.on('value', updateInfo, showErr);
+
         function initMap(){
 			
 		var map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 11,
-			center: {lat: -5.400549,lng: 105.266272}});
+			center:center
+		});
+
+		map.addListener('click', function (e) {
+			var latLng = e.latLng;
+			coords.push({lat: latLng.lat(), lng: latLng.lng()});
+			markers.push(createMarker({lat: latLng.lat(), lng: latLng.lng()}));
+		});
+
 		  var infoWin = new google.maps.InfoWindow();
             console.log(map);
         
@@ -54,15 +71,11 @@
 		icon : 'images/pin.png',
 		animation: google.maps.Animation.DROP
 					});
-					google.maps.event.addListener(marker, 'click', function(evt) {
+					google.maps.event.addListener(marker, 'dblclick', function(evt) {
 						infoWin.setContent(location.info);
 						infoWin.open(map, marker);
 					})
 
-                       map.addListener('click',function(evt){
-		               marker.setPosition(event.latLng);
-		               document.getElementById('lat').value = marker.position.toString();
-                       });
 				return marker;
                 }); 
             console.log(locations);
@@ -73,6 +86,66 @@
             var d = markerCluster.distanceBetweenPoints_(markers[2].getPosition(),markers[4].getPosition());
             console.log(markerCluster.getCalculator());
 		}
+//
+		dataRef.on('value', updateInfo, showErr);
+		function updateInfo(data){
+			console.log("berhasil");
+		}
+		function showErr(err){
+			console.log(err);
+		}
+		var coords=[
+					   // {lat:4,lng:20},
+					   // {lat:11,lng:14},
+					   // {lat:3,lng:1}
+					];
+		var lines = {points:coords};
+
+		function createMarker(coord){
+			var marker = new google.maps.Marker(
+				{
+					position:coord,
+					map: map
+				}
+			);
+			return marker;
+		}
+		document.getElementById("save").addEventListener("click",function(){
+			var lines = {points:coords};
+			arrayPolygon.forEach(function(data){
+				data.setMap(null);
+			});
+			dataRef.push(
+				{
+					tupe :'polyline',
+					geometry : lines
+				}
+			);
+			coords=[];
+		});
+
+		function createPolygon(coord){
+			var tempPoly = new google.maps.Polygon({
+			Path : coord,
+			strokeColor :'red',
+			strokeOpocity : 0.8,
+			strokeWeight : 1,
+			fillColor : 'red',
+			fillOpocity : 0.35
+		});
+		tempPoly.setMap(map);
+		return tempPoly;
+		}
+
+		function showErr(err){
+			console.log(err);
+		}
+		function updateInfo(data){
+			data.forEach(function(datamarker){
+				arrayPolygon.push(createPolygon(datamarker.val().geometry.points));
+			});
+		}
+//
 
         var locations = [
 			{lat: -5.397317, lng: 105.262002, info: "Makam Pahlawan"},
