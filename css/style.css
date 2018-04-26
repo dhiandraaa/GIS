@@ -1,0 +1,23 @@
+.atas{
+    background-color: deepskyblue;
+
+}
+h1{
+    padding: 10px;
+    color: white;
+}
+h2{
+    padding-top: 10px;
+    color: darkcyan;
+}
+.bawah{
+    background-color: darkslategray;
+    padding-top: 20px;
+}
+a{
+    color: black;
+}
+h4{
+    color: darkslategrey;
+    padding-left: 10px;
+}
