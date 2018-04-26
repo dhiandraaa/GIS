@@ -1,166 +1,93 @@
-<!DOCTYPE html>
-<html>
-<style>
-	#map {
-    height: 300px;
-    width: 90%;
-}
-</style>
+<!doctype html>
+<html lang="en">
   <head>
-  <title>Sitepu</title>
-  <link href="index.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SITEPU</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/slim.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </head>
-<body><center><div id="wrap">
-  	<div id=header>
-		<h2>SITEPU</h2>
-	</div>
-    	<div id="map"></div><br>
-		<div id=info>
-    		<input type="text" name="lng" placeholder="Longitude"> &nbsp;
-    		<input type="text" name="lat" placeholder="Latitude"><br><br>
-			<textarea name="tempat"></textarea>
-    	</div>
-		<button type="button" id="save">Save</button>
-    </div>
-	</center>
-</body>
-		
-		<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-		<script>
-  // Initialize Firebase
-	var config = {
-		apiKey: "AIzaSyDEQFNTDHoltRvu-wrdhGQxzpgUFzMo1bM",
-		authDomain: "tugas-sig-1521500286405.firebaseapp.com",
-		databaseURL: "https://tugas-sig-1521500286405.firebaseio.com",
-		projectId: "tugas-sig-1521500286405",
-		storageBucket: "",
-		messagingSenderId: "358420723994"
-	};
-	firebase.initializeApp(config);
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">SITEPU</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="About.html">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Des.html">Desclaimer</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Pol.html">Policy</a>
+             </li>
+          </ul>
+        </div>
+      </nav>
 
-	var db              = firebase.database();
-	var dataRef         = db.ref('Sitepu');
-	var newPolygon      = null;
-	var arrayPolygon    = [];
-	var map             = null;
-	var coords          = [];
-	var markers         = [];
-	var center          = {lat: -5.400549,lng: 105.266272};
+      <div class="container-fluid atas">
+          <div class="cointainer">
+              <div class="row">
+                  <div class="col-lg">
+                    <center>
+                      <h1>SITEPU</h1>
+                    </center>
+                  </div>
+              </div>
+          </div>
+      </div> 
 
-	dataRef.on('value', updateInfo, showErr);
+      <div class="container-fluid">
+          <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <br> <h4><center>Daftar TPU</center></h4>
+                    <table>
+                  <tr>
+                      <td><img src="images/tpu/pahlawan.jpg" width="200px" height="150px"></td>
+                      <td> <h4> Makam Pahlawan </h4> 
+                      <p>&nbsp;<a href="pahlawan.html">Tampilkan Maps</a> </p>
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                    <td> <img src="images/tpu/siwomego.png" width="200px" height="150px"></td>
+                    <td> <h4>Makam Siwo Mego</h4>
+                    <p>&nbsp;<a href="siwo.html">Tampilkan Maps</a> </p>
+                    </td>
+                  </tr>
+                  
+                  </table>
+                  </div>
 
-        function initMap(){
-			
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 11,
-			center:center
-		});
+                    <div class="col-md-6">
+                    <h4><center> Persebaran TPU </center></h4>
+                  <div id='map'></div>    
+                  </div>
+              </div>
+          </div>
+      </div>
 
-		map.addListener('click', function (e) {
-			var latLng = e.latLng;
-			coords.push({lat: latLng.lat(), lng: latLng.lng()});
-			markers.push(createMarker({lat: latLng.lat(), lng: latLng.lng()}));
-		});
-
-		  var infoWin = new google.maps.InfoWindow();
-            console.log(map);
-        
-            var markers = locations.map(function(location, i) {
-                var marker = new google.maps.Marker({
-                    position: location,
-		icon : 'images/pin.png',
-		animation: google.maps.Animation.BOUNCE
-					});
-					google.maps.event.addListener(marker, 'dblclick', function(evt) {
-						infoWin.setContent(location.info);
-						infoWin.open(map, marker);
-					})
-
-				return marker;
-                }); 
-            console.log(locations);
-            console.log(markers);
-            var markerCluster = new MarkerClusterer(map, markers,
-                {imagePath: 'images/m'});
-        
-            var d = markerCluster.distanceBetweenPoints_(markers[2].getPosition(),markers[4].getPosition());
-            console.log(markerCluster.getCalculator());
-		}
-//
-		dataRef.on('value', updateInfo, showErr);
-		function updateInfo(data){
-			console.log("berhasil");
-		}
-		function showErr(err){
-			console.log(err);
-		}
-		var coords=[
-					   // {lat:4,lng:20},
-					   // {lat:11,lng:14},
-					   // {lat:3,lng:1}
-					];
-		var lines = {points:coords};
-
-		function createMarker(coord){
-			var marker = new google.maps.Marker(
-				{
-					position:coord,
-					map: map
-				}
-			);
-			return marker;
-		}
-		document.getElementById("save").addEventListener("click",function(){
-			var lines = {points:coords};
-			arrayPolygon.forEach(function(data){
-				data.setMap(null);
-			});
-			dataRef.push(
-				{
-					tupe :'polyline',
-					geometry : lines
-				}
-			);
-			coords=[];
-		});
-
-		function createPolygon(coord){
-			var tempPoly = new google.maps.Polygon({
-			Path : coord,
-			strokeColor :'red',
-			strokeOpocity : 0.8,
-			strokeWeight : 1,
-			fillColor : 'red',
-			fillOpocity : 0.35
-		});
-		tempPoly.setMap(map);
-		return tempPoly;
-		}
-
-		function showErr(err){
-			console.log(err);
-		}
-		function updateInfo(data){
-			data.forEach(function(datamarker){
-				arrayPolygon.push(createPolygon(datamarker.val().geometry.points));
-			});
-		}
-//
-
-        var locations = [
-			{lat: -5.397317, lng: 105.262002, info: "Makam Pahlawan"},
-			{lat: -5.363868, lng: 105.248657, info: "Kampung Baru"},
-			{lat: -5.372858, lng: 105.239979, info: "KB. Anak Agung Siwo Mego"},
-			{lat: -5.378445, lng: 105.240977, info: "Muslim Kamboja"},
-			{lat: -5.377909, lng: 105.244274, info: "Jl. Sultan Jamil"},
-			{lat: -5.427119, lng: 105.268171, info: "KB Payakun"},
-			{lat: -5.413963, lng: 105.261228, info: "Kebon Jahe"},
-			{lat: -5.415326, lng: 105.272232, info: "Klutum"},
-			]
-    </script>	
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbqwfq4FJ6xxI_Oho85sA-2jlWUZLI5gM&callback=initMap"
-	type="text/javascript"></script>
-	<script src="src/markerclusterer.js">
-    </script>
-	
+        <div class="container-fluid bawah">
+          <div class="container">
+            <div class="col-sm">
+                <h1>SITPU UYE</h1>
+            </div>
+          </div>
+      </div>
+  </body>
+<script src="js/main.js"> </script>
+<script src="js/markerclusterer.js"> </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4noGQHoz7ZoG7DYMbxaYbofksVSAXJJI&callback=initMap">
+</script>
 </html>
