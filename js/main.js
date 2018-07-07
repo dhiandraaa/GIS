@@ -3,14 +3,26 @@ function initMap(){
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
         center: { lat: -5.3984765, lng: 105.2602632}});
-      var infoWin = new google.maps.InfoWindow();
+	
+	var icons = {
+                makam: {
+                	name: 'Pemakaman',
+                	icon: 'images/pin.png'
+                },
+		kumpulan: {
+			name: 'Kumpulan TPU',
+			icon: 'images/m1.png'
+		}
+	 };
+	
+      	var infoWin = new google.maps.InfoWindow();
         console.log(map);
     
         var markers = locations.map(function(location, i) {
             var marker = new google.maps.Marker({
                 position: location,
-    icon : 'images/pin.png',
-    animation: google.maps.Animation.DROP
+    		icon : 'images/pin.png',
+    		animation: google.maps.Animation.DROP
                 });
                 google.maps.event.addListener(marker, 'click', function(evt) {
                     infoWin.setContent(location.info);
@@ -30,6 +42,17 @@ function initMap(){
     
         var d = markerCluster.distanceBetweenPoints_(markers[2].getPosition(),markers[4].getPosition());
         console.log(markerCluster.getCalculator());
+	
+	var legend = document.getElementById('legend');
+            for (var key in icons) {
+                var type = icons[key];
+                var name = type.name;
+                var icon = type.icon;
+                var div = document.createElement('div');
+                div.innerHTML = '<img src="' + icon + '"> ' + name;
+                legend.appendChild(div);
+            }
+         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
     }
 
     var locations = [
@@ -41,12 +64,14 @@ function initMap(){
         {lat: -5.427119, lng: 105.268171, info: "Keluarga Besar Payakun"},
         {lat: -5.413963, lng: 105.261228, info: "Kebon Jahe"},
         {lat: -5.415326, lng: 105.272232, info: "Klutum"},
+        {lat: -5.4522318, lng: 105.2526217, info: "Makam Keramat Tubagus Yahya"},
+        {lat: -5.3968289, lng: 105.280267, info: "Taman Makam H Imron"},
         {lat: -5.3845252, lng: 105.2471616, info: "Makam Keluarga Doloe Boemi Kedaton"},
         {lat: -5.393451, lng: 105.2561408, info: "Makam Katolik Yusuf Arimatea"},
         {lat: -5.383811, lng: 105.2594328, info: "Makam Keluarga Dalem Raya"},
         {lat: -5.417979, lng: 105.2504127, info: "Makam Keluarga Besar Ibu Beah Binti Hi. Jaro Buang"},
-        {lat: -5.4512849, lng: 105.2567658, info: "Makam Keluarga kh Abdul Manaf"},
+        {lat: -5.4512849, lng: 105.2567658, info: "Makam Keluarga KH Abdul Manaf"},
         {lat: -5.4202259, lng: 105.2506808, info: "Makam Keluarga H. Djaro Boeang"},
         {lat: -5.4079609, lng: 105.267456, info: "Blok. 7 Sawah Brebes"},
-        {lat: -5.3988254, lng: 105.2624812, info: "Surabaya"},
+        {lat: -5.3988254, lng: 105.2624812, info: "Taman Murni"},
         ]
