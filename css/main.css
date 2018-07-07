@@ -5,3 +5,10 @@
     vertical-align: middle;
     border-radius: 5px;
 }
+
+#legend {
+    background: #ffffff;
+    border: 1px solid #000000;
+    width: 130px;
+    margin-top: 0px;
+}
